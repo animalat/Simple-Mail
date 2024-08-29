@@ -1,0 +1,23 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Build directories
+dist/
+build/
+
+# Electron specific
+*.asar
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.vscode/
+.idea/
