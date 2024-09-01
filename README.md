@@ -4,5 +4,9 @@ Frontend:
 Electron
 React
 Webpack
-Concurrent
+concurrently
 electron-reload
+
+// sidebar
+@trendmicro/react-sidenav
+@fortawesome/fontawesome-free

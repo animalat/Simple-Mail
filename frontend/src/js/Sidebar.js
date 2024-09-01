@@ -12,6 +12,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './Sidebar.css';
 
 export default function Sidebar() {
+    // Store accounts and folders in state
     const [accounts, setAccounts] = useState(["example1@outlook.com", "example2@gmail.com", "long.email.example@outlook.com"]);
     const [folders, setFolders] = useState(["Folder 1", "Folder 2"]);
 

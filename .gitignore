@@ -21,3 +21,19 @@ Thumbs.db
 # IDE specific files
 .vscode/
 .idea/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+
+# SQLite database
+db.sqlite3
+
+# Environment variables
+.env
+
+# Compiled JavaScript and CSS
+frontend/build/
