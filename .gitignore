@@ -37,3 +37,7 @@ db.sqlite3
 
 # Compiled JavaScript and CSS
 frontend/build/
+
+# Ignore Google API credentials and tokens
+credentials.json
+token.json
