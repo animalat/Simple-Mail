@@ -1,7 +1,10 @@
+import os
 import time
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailbackend.settings")
 
 from mailing.models import EmailAddress, Group, Emails
 
@@ -29,6 +32,7 @@ def read_labels(creds, email_address):
     try:
         # Call the Gmail API
         service = build("gmail", "v1", credentials=creds)
+
         results = service.users().labels().list(userId="me").execute()
         labels = results.get("labels", [])
 

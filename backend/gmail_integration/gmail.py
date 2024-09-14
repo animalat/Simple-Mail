@@ -1,5 +1,16 @@
 import os
-import threading
+import sys
+
+# Ensure project root is in Python path
+current_dir = os.path.dirname(__file__)
+project_root = os.path.abspath(os.path.join(current_dir, '..'))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+# Set up Django environment
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mailbackend.settings')
+import django
+django.setup()
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials

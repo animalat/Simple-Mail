@@ -9,9 +9,9 @@ class EmailAddress(models.Model):
 
 class Group(models.Model):
     name = models.CharField(max_length=255)
-    gmail_id = models.CharField(max_length=255, unique=True)  # Store the Gmail label ID
-    type = models.CharField(max_length=50)  # Store the type of the label
-    email_address = models.ForeignKey(EmailAddress, on_delete=models.CASCADE, related_name='groups')
+    gmail_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    type = models.CharField(max_length=50, null=True, blank=True)
+    email_address = models.ForeignKey(EmailAddress, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
