@@ -1,13 +1,11 @@
 import os
-
-import time
 import threading
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+
+from read_labels import read_labels
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
@@ -39,32 +37,7 @@ def main():
     with open(token_path, "w") as token:
       token.write(creds.to_json())
 
-  try:
-    # Call the Gmail API
-    service = build("gmail", "v1", credentials=creds)
-    results = service.users().labels().list(userId="me").execute()
-    labels = results.get("labels", [])
-
-    # results = service.users().messages().list(userId="me", labelIds=['INBOX']).execute()
-    # messages = results.get("messages", [])
-
-    if not labels:
-    # message_count = int(input("How many messages do you want to see? "))
-    # if not messages:
-      print("No labels found.")
-      return
-    
-    print("Labels:")
-    for label in labels:
-      print(label["name"])
-      # msg = service.users().messages().get(userId="me", id=message["id"]).execute()
-      # print(msg["snippet"])
-      # print("\n")
-      # time.sleep(2)
-
-  except HttpError as error:
-    # TODO(developer) - Handle errors from gmail API.
-    print(f"An error occurred: {error}")
+    read_labels(creds)
 
 if __name__ == "__main__":
   main()
