@@ -43,7 +43,7 @@ def read_labels(creds, email_address):
         else:
             print("Labels:")
             for label in labels:
-                group, created = Group.objects.get_or_create(
+                group = Group.objects.create(
                     gmail_id=label["id"],
                     defaults={
                         "name": label["name"],
@@ -52,32 +52,32 @@ def read_labels(creds, email_address):
                     }
                 )
                 groups.append(group)
-                print(f"Label ID: {label['id']}, Group Created: {created}")
+                print(f"Label ID: {label['id']}")
         
         return groups
 
     except HttpError as error:
         gmail_error(error)
 
-def read_messages(creds):
+def read_messages(creds, email_address):
     try:
-        # Call the Gmail API
         service = build("gmail", "v1", credentials=creds)
-
         results = service.users().messages().list(userId="me", labelIds=['INBOX']).execute()
         messages = results.get("messages", [])
 
-        message_count = int(input("How many messages do you want to see? "))
         if not messages:
             print("No messages found.")
             return
 
-        print("Labels:")
         for message in messages:
             msg = service.users().messages().get(userId="me", id=message["id"]).execute()
-            print(msg["snippet"])
-            print("\n")
-            time.sleep(2)
+            # get subject from msg
+            subject = next((header["value"] for header in msg["payload"]["headers"] if header["name"] == "Subject"), "No Subject")
+            body = msg.get("snippet", "No Body")
+            
+            email = Emails.objects.create(subject=subject, body=body)
+            email.groups.add(*Group.objects.filter(email_address=email_address))
+            print(f"Saved email: {subject}")
 
     except HttpError as error:
         gmail_error(error)

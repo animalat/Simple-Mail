@@ -47,7 +47,9 @@ def main():
       token.write(creds.to_json())
 
   email_address_instance = get_user_email_address(creds)
+  print(email_address_instance)
   groups = read_labels(creds, email_address_instance)
+  messages = read_messages(creds, email_address_instance)
 
 if __name__ == "__main__":
   main()
