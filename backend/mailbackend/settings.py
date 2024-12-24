@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'mailing',
-    'gmail_integration'
+    'gmail_integration',
 ]
 
 MIDDLEWARE = [

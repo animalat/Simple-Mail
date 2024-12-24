@@ -6,7 +6,7 @@ from googleapiclient.errors import HttpError
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailbackend.settings")
 
-from mailing.models import EmailAddress, Group, Emails
+from mailing.models import EmailAddress, Group, Email
 
 def get_user_email_address(creds):
     try:
@@ -36,25 +36,23 @@ def read_labels(creds, email_address):
         results = service.users().labels().list(userId="me").execute()
         labels = results.get("labels", [])
 
-        groups = []
-
         if not labels:
             print("No labels found.")
-        else:
-            print("Labels:")
-            for label in labels:
-                group = Group.objects.create(
-                    gmail_id=label["id"],
-                    defaults={
-                        "name": label["name"],
-                        "type": label["type"],
-                        "email_address": email_address
-                    }
-                )
-                groups.append(group)
-                print(f"Label ID: {label['id']}")
+            return
+
+        print("Labels:")
+        for label in labels:
+            group, created = Group.objects.get_or_create(
+                group_id=label["id"],
+                defaults={
+                    "name": label["name"],
+                    "type": label["type"],
+                    "email_address": email_address
+                }
+            )
+            print(f"Label ID: {label['id']} Created: {created}")
         
-        return groups
+        return
 
     except HttpError as error:
         gmail_error(error)
@@ -62,22 +60,43 @@ def read_labels(creds, email_address):
 def read_messages(creds, email_address):
     try:
         service = build("gmail", "v1", credentials=creds)
-        results = service.users().messages().list(userId="me", labelIds=['INBOX']).execute()
+        results = service.users().messages().list(userId="me", includeSpamTrash=True).execute()
         messages = results.get("messages", [])
 
         if not messages:
             print("No messages found.")
             return
-
+        
         for message in messages:
             msg = service.users().messages().get(userId="me", id=message["id"]).execute()
-            # get subject from msg
-            subject = next((header["value"] for header in msg["payload"]["headers"] if header["name"] == "Subject"), "No Subject")
-            body = msg.get("snippet", "No Body")
             
-            email = Emails.objects.create(subject=subject, body=body)
-            email.groups.add(*Group.objects.filter(email_address=email_address))
-            print(f"Saved email: {subject}")
+            # get subject
+            subject = ""
+            for header in msg["payload"]["headers"]:
+                if header["name"] == "Subject":
+                    subject = header["name"]
+
+            # temporarily just get a snippet (will handle whole message & images/attachments later)
+            body = msg.get("snippet", "")
+
+            group_ids = []
+            for label_id in msg.get("labelIds", []):
+                group_ids.append(label_id)
+
+            groups = Group.objects.filter(group_id__in=group_ids, email_address=email_address)
+
+            email, created = Email.objects.get_or_create(
+                message_id = message["id"],
+                defaults={
+                    "subject": subject,
+                    "body": body,
+                }
+            )
+            email.groups.add(*groups)
+
+            print(f"Message: {body} Created: {created}")
+
+        return
 
     except HttpError as error:
         gmail_error(error)

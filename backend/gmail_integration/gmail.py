@@ -16,7 +16,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-from mailing.models import EmailAddress, Group, Emails
+from mailing.models import EmailAddress, Group, Email
 from gmail_integration.gmail_functions import get_user_email_address, read_labels, read_messages
 
 # If modifying these scopes, delete the file token.json.
@@ -48,8 +48,8 @@ def main():
 
   email_address_instance = get_user_email_address(creds)
   print(email_address_instance)
-  groups = read_labels(creds, email_address_instance)
-  messages = read_messages(creds, email_address_instance)
+  read_labels(creds, email_address_instance)
+  read_messages(creds, email_address_instance)
 
 if __name__ == "__main__":
   main()
