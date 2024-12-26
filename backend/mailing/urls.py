@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import EmailListView
 
 urlpatterns = [
-    path('test/', views.test_send_message),
+    path('emails/', EmailListView.as_view(), name='email-list'),
 ]
