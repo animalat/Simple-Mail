@@ -11,7 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import './Sidebar.css';
 
-export default function Sidebar() {
+const Sidebar = () => {
     // Store accounts and folders in state
     const [accounts, setAccounts] = useState(["example1@outlook.com", "example2@gmail.com", "long.email.example@outlook.com"]);
     const [folders, setFolders] = useState(["Folder 1", "Folder 2"]);
@@ -32,7 +32,11 @@ export default function Sidebar() {
         setFolders(folders.filter(f => f !== folder));
     };
 
-    return <SideNav className="sidebar-custom" onSelect={(selected) => { console.log(selected); }}>
+    return (
+    <SideNav 
+        className="sidebar-custom"
+        onToggle={() => {}}
+    >
         <SideNav.Toggle />
         <SideNav.Nav>
             <NavItem eventKey="accounts" expanded={true}>
@@ -70,4 +74,7 @@ export default function Sidebar() {
             </NavItem>
         </SideNav.Nav>
     </SideNav>
-}
+    );
+};
+
+export default Sidebar;

@@ -2,15 +2,19 @@ import React from 'react';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-import Sidebar from './Sidebar';
+import Sidebar from './components/sidebar/Sidebar';
+import EmailList from './components/email_list/EmailList'
 
-export default function App() {
+const App = () => {
     return (
         <div>
             <Sidebar />
+            <EmailList />
         </div>
     );
-}
+};
+
+export default App;
 
 /*
             <button onClick={() => {

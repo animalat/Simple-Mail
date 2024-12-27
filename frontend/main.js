@@ -17,6 +17,8 @@ function createWindow () {
     });
 
     mainWindow.loadFile('index.html');
+
+    mainWindow.webContents.openDevTools();
 }
 
 // Reload app when code changes
