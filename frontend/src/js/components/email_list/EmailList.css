@@ -1,6 +1,6 @@
 .white-underlay {
     height: 100vh;
-    width: 325px;
+    width: 350px;
     margin-left: 1.75em;
     padding-left: 25px;
     border-right: 1px solid #C5C5C5;
@@ -10,18 +10,21 @@
 }
 
 .email-list {
+    height: 100vh;
     display: grid;
-    width: 325px;
+    width: 350px;
     margin-left: 1.75em;
     padding-left: 25px;
     border-right: 1px solid #C5C5C5;
     background-color: #fff;
     box-shadow: 0 0px 10px #C5C5C5;
-    position: relative;
+    overflow-y: scroll;
     z-index: 1;
+    border-top: 1px solid #C5C5C5;
 }
 
 .email-list > .email-entry {
+    height: 80px;
     cursor: pointer;
     display: grid;
     grid-template-columns: 1fr 200px;
@@ -38,4 +41,21 @@
 
 .email-list > .email-entry:not(:last-child) {
     border-bottom: none;
+}
+
+.email-list > .email-entry:is(:first-child) {
+    border-top: none;
+}
+
+.email-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.email-list::-webkit-scrollbar-thumb {
+    background-color: #C5C5C5;
+    border-radius: 4px;
+}
+
+.email-list::-webkit-scrollbar-thumb:hover {
+    background-color: #b0b0b0;
 }
