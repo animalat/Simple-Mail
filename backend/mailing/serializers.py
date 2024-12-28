@@ -5,7 +5,10 @@ class EmailAddressSerializer(serializers.ModelSerializer):
     class Meta:
         # fields automatically generated for us
         model = EmailAddress
-        fields = ['id', 'address']
+        fields = [
+                'id', 
+                'address'
+            ]
 
 class GroupSerializer(serializers.ModelSerializer):
     # nested serializer for EmailAddress
@@ -13,7 +16,13 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ['id', 'name', 'group_id', 'type', 'email_address']
+        fields = [
+            'id', 
+            'name', 
+            'group_id', 
+            'type', 
+            'email_address'
+        ]
 
 class EmailSerializer(serializers.ModelSerializer):
     # nested serializer for Group
@@ -21,4 +30,13 @@ class EmailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Email
-        fields = ['id', 'message_id', 'subject', 'body', 'groups']
+        fields = [
+            'id',
+            'message_id',
+            'subject',
+            'body',
+            'html_content',
+            'attachments',
+            'inline_images',
+            'groups',
+        ]

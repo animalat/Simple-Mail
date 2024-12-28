@@ -13,7 +13,7 @@ const DisplayNewEmail = ({ email }) => {
             className="email-entry"
             onClick={() => { emailClick("EMAIL CLICKED"); }}
         >
-            <span>{email["subject"]}</span>
+            <span>{email.subject}</span>
        </div> 
     );
 };
@@ -26,30 +26,30 @@ const WhiteUnderlay = () => {
 
 const EmailList = () => {
     const [emails, setEmails] = useState([
-        {"subject": "subject1"},
-        {"subject": "subject2"},
-        {"subject": "subject3"},
-        {"subject": "subject4"},
-        {"subject": "subject1"},
-        {"subject": "subject2"},
-        {"subject": "subject3"},
-        {"subject": "subject4"},
-        {"subject": "subject1"},
-        {"subject": "subject2"},
-        {"subject": "subject3"},
-        {"subject": "subject4"},
-        {"subject": "subject1"},
-        {"subject": "subject2"},
-        {"subject": "subject3"},
-        {"subject": "subject4"},
-        {"subject": "subject1"},
-        {"subject": "subject2"},
-        {"subject": "subject3"},
-        {"subject": "subject4"},
-        {"subject": "subject1"},
-        {"subject": "subject2"},
-        {"subject": "subject3"},
-        {"subject": "subject4"},
+        {subject: "subject1"},
+        {subject: "subject2"},
+        {subject: "subject3"},
+        {subject: "subject4"},
+        {subject: "subject1"},
+        {subject: "subject2"},
+        {subject: "subject3"},
+        {subject: "subject4"},
+        {subject: "subject1"},
+        {subject: "subject2"},
+        {subject: "subject3"},
+        {subject: "subject4"},
+        {subject: "subject1"},
+        {subject: "subject2"},
+        {subject: "subject3"},
+        {subject: "subject4"},
+        {subject: "subject1"},
+        {subject: "subject2"},
+        {subject: "subject3"},
+        {subject: "subject4"},
+        {subject: "subject1"},
+        {subject: "subject2"},
+        {subject: "subject3"},
+        {subject: "subject4"},
     ]);
     
     return (

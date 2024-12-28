@@ -1,6 +1,7 @@
 import os
 import time
-
+import base64
+from datetime import datetime, timezone
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
@@ -74,7 +75,7 @@ def read_messages(creds, email_address):
             subject = ""
             for header in msg["payload"]["headers"]:
                 if header["name"] == "Subject":
-                    subject = header["name"]
+                    subject = header["value"]
 
             # temporarily just get a snippet (will handle whole message & images/attachments later)
             body = msg.get("snippet", "")
@@ -85,11 +86,48 @@ def read_messages(creds, email_address):
 
             groups = Group.objects.filter(group_id__in=group_ids, email_address=email_address)
 
+            # get following fields
+            html_content = None
+            attachments = []
+            inline_images = []
+            for part in msg['payload'].get('parts', []):
+                # attachments
+                if part.get('filename'):
+                    attachment_id = part['body'].get('attachmentId')
+                    if attachment_id:
+                        attachment = service.users().messages().attachments().get(
+                            userId='me', messageId=msg['id'], id=attachment_id
+                        ).execute()
+                        file_data = base64.urlsafe_b64decode(attachment['data'].encode('UTF-8'))
+                        attachments.append({
+                            'filename': part['filename'],
+                            'content': base64.b64encode(file_data).decode('UTF-8')
+                        })
+
+                headers = {h['name']: h['value'] for h in part.get('headers', [])}
+                if 'Content-ID' in headers or 'inline' in headers.get('Content-Disposition', ''):
+                    image_data = base64.urlsafe_b64decode(part['body']['data'].encode('UTF-8'))
+                    inline_images.append({
+                        'content_id': headers.get('Content-ID', '').strip('<>'),
+                        'content': base64.b64encode(image_data).decode('UTF-8')
+                    })
+
+                if part['mimeType'] == 'text/html':
+                    html_content = base64.urlsafe_b64decode(part['body']['data']).decode('UTF-8')
+
+            # get time sent
+            epoch_seconds = int(msg['internalDate']) / 1000
+            time_sent = datetime.fromtimestamp(epoch_seconds, tz=timezone.utc)
+
             email, created = Email.objects.get_or_create(
                 message_id = message["id"],
                 defaults={
                     "subject": subject,
                     "body": body,
+                    "html_content": html_content,
+                    "attachments": attachments,
+                    "inline_images": inline_images,
+                    "time_sent": time_sent
                 }
             )
             email.groups.add(*groups)

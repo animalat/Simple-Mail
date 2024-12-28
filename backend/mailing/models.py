@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 class EmailAddress(models.Model):
@@ -20,6 +21,10 @@ class Email(models.Model):
     message_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
     subject = models.CharField(max_length=255)
     body = models.TextField()
+    html_content = models.TextField(null=True, blank=True)
+    attachments = ArrayField(models.JSONField(), default=list, blank=True)
+    inline_images = ArrayField(models.JSONField(), default=list, blank=True)
+    time_sent = models.DateTimeField(null=True, blank=True)
     groups = models.ManyToManyField(Group, related_name='emails')
 
     def __str__(self):
