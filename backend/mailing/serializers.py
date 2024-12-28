@@ -33,10 +33,12 @@ class EmailSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'message_id',
+            'sender',
             'subject',
             'body',
             'html_content',
             'attachments',
             'inline_images',
             'groups',
+            'time_sent',
         ]
