@@ -1,4 +1,4 @@
-const emailAddress = "nakshayanapps@gmail.com";
+const emailAddress = "";
 
 fetch(`http://localhost:8000/mailing/emails/?email_address=${emailAddress}`)
   .then((response) => response.json())
