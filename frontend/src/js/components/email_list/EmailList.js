@@ -16,7 +16,7 @@ const formatDate = (dateString) => {
     } else if (isWithinThreeDays) {
         return `${date.toLocaleDateString('en-US', { weekday: 'short' })} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     } else if (isWithinLastMonth) {
-        return `${date.toLocaleDateString('en-US', { weekday: 'short' })} ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+        return `${date.toLocaleDateString('en-US', { weekday: 'short' })} ${date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })}`;
     } else {
         return date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
     }
