@@ -22,7 +22,7 @@ const formatDate = (dateString) => {
     }
 };
 
-const DisplayNewEmail = ({ email }) => {
+const DisplayNewEmail = ({ email, onEmailClick }) => {
     const emailClick = (emailId) => {
         // TODO: handle opening email...
         console.log(emailId);
@@ -31,7 +31,7 @@ const DisplayNewEmail = ({ email }) => {
     return (
        <div 
             className="email-entry"
-            onClick={() => { emailClick("EMAIL CLICKED"); }}
+            onClick={() => { onEmailClick(email); }}
         >
             <div className="email-details">
                 <div className="email-sender">{email.sender}</div>
@@ -49,7 +49,7 @@ const WhiteUnderlay = () => {
     );
 };
 
-const EmailList = () => {
+const EmailList = ({ onEmailClick }) => {
     const [emails, setEmails] = useState([
         {
             sender: "alice@example.com",
@@ -163,6 +163,7 @@ const EmailList = () => {
                     <DisplayNewEmail 
                         key={index} 
                         email={email}
+                        onEmailClick={onEmailClick}
                     />
                 ))}
             </div>
