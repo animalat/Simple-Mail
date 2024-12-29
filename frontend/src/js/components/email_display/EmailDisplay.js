@@ -5,7 +5,7 @@ import './EmailDisplay.css';
 const EmailDisplay = ({ email, from }) => {
     return (
         <div className="email-display">
-            {email.sender && <h2>{email.sender}</h2>}
+            {email.subject && <h2>{email.subject}</h2>}
             {from && (
                 <p>
                     <strong>From:</strong> {from}
