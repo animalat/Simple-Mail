@@ -21,6 +21,7 @@ class Email(models.Model):
     message_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
     sender = models.CharField(max_length=255, null=True, blank=True)
     subject = models.CharField(max_length=255)
+    recipient = models.CharField(max_length=255)
     body = models.TextField()
     html_content = models.TextField(null=True, blank=True)
     attachments = ArrayField(models.JSONField(), default=list, blank=True)

@@ -74,11 +74,14 @@ def read_messages(creds, email_address):
             # get subject
             subject = ""
             sender = ""
+            recipient = ""
             for header in msg["payload"]["headers"]:
                 if header["name"] == "Subject":
                     subject = header["value"]
-                if header["name"] == "From":
+                elif header["name"] == "From":
                     sender = header["value"]
+                elif header["name"] == "To":
+                    recipient = header["value"]
 
             # temporarily just get a snippet (will handle whole message & images/attachments later)
             body = msg.get("snippet", "")
@@ -126,6 +129,7 @@ def read_messages(creds, email_address):
                 message_id = message["id"],
                 defaults={
                     "sender": sender,
+                    "recipient": recipient,
                     "subject": subject,
                     "body": body,
                     "html_content": html_content,

@@ -34,6 +34,7 @@ class EmailSerializer(serializers.ModelSerializer):
             'id',
             'message_id',
             'sender',
+            'recipient',
             'subject',
             'body',
             'html_content',
