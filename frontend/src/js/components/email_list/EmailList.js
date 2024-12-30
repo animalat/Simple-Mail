@@ -22,15 +22,10 @@ const formatDate = (dateString) => {
     }
 };
 
-const DisplayNewEmail = ({ email, onEmailClick }) => {
-    const emailClick = (emailId) => {
-        // TODO: handle opening email...
-        console.log(emailId);
-    };
-
+const DisplayNewEmail = ({ email, onEmailClick, isSelected }) => {
     return (
        <div 
-            className="email-entry"
+            className={`email-entry ${isSelected ? 'selected' : ''}`}
             onClick={() => { onEmailClick(email); }}
         >
             <div className="email-details">
@@ -52,108 +47,133 @@ const WhiteUnderlay = () => {
 const EmailList = ({ onEmailClick }) => {
     const [emails, setEmails] = useState([
         {
+            id: 1,
             sender: "alice@example.com",
             subject: "Project Update",
             body: "The project has been progressing well. Let's discuss further in tomorrow's meeting.",
             time_sent: "2024-12-26 15:30:00",
         },
         {
+            id: 2,
             sender: "bob@example.com",
             subject: "Invoice Reminder",
             body: "This is a reminder to review the attached invoice for the past month.",
             time_sent: "2024-12-24 08:15:00",
         },
         {
+            id: 3,
             sender: "marketing@shoponline.com",
             subject: "Holiday Sale!",
             body: "Enjoy up to 50% off on selected items during our holiday sale.",
             time_sent: "2024-12-22 12:45:00",
         },
         {
+            id: 4,
             sender: "jane.smith@example.com",
             subject: "Happy Holidays!",
             body: "Wishing you a wonderful holiday season filled with joy and laughter.",
             time_sent: "2024-12-20 17:00:00",
         },
         {
+            id: 5,
             sender: "notifications@banking.com",
             subject: "Account Statement Available",
             body: "Your monthly account statement is now available for viewing.",
             time_sent: "2024-11-15 10:00:00",
         },
         {
+            id: 6,
             sender: "hr@company.com",
             subject: "Performance Review",
             body: "Your performance review is scheduled for next week. Please confirm your availability.",
             time_sent: "2024-12-26 13:20:00",
         },
         {
+            id: 7,
             sender: "team@projectmanagement.com",
             subject: "Task Deadline Reminder",
             body: "Please ensure your assigned tasks are completed by Friday.",
             time_sent: "2024-12-25 11:15:00",
         },
         {
+            id: 8,
             sender: "no-reply@eventbrite.com",
             subject: "Event Confirmation",
             body: "Your registration for the 'Tech Innovators Summit' is confirmed.",
             time_sent: "2024-12-24 09:00:00",
         },
         {
+            id: 9,
             sender: "support@onlineservice.com",
             subject: "Password Reset",
             body: "Click the link below to reset your password.",
             time_sent: "2024-12-23 19:30:00",
         },
         {
+            id: 10,
             sender: "family@groupchat.com",
             subject: "Holiday Plans",
             body: "Let’s finalize the schedule for the holiday dinner.",
             time_sent: "2024-12-22 14:50:00",
         },
         {
+            id: 11,
             sender: "newsletter@fitnessclub.com",
             subject: "5 Tips to Stay Fit During Holidays",
             body: "Check out our latest tips to maintain your fitness routine during the festive season.",
             time_sent: "2024-12-21 07:45:00",
         },
         {
+            id: 12,
             sender: "professor.jones@university.edu",
             subject: "Assignment Feedback",
             body: "Your feedback for the latest assignment has been posted. Please review it.",
             time_sent: "2024-12-20 16:10:00",
         },
         {
+            id: 13,
             sender: "sales@electronicsstore.com",
             subject: "Your Order Has Shipped",
             body: "Your order #12345 has been shipped and is on its way.",
             time_sent: "2024-12-18 10:30:00",
         },
         {
+            id: 14,
             sender: "reminders@calendar.com",
             subject: "Upcoming Appointment",
             body: "You have an appointment scheduled on 2024-12-27 at 3:00 PM.",
             time_sent: "2024-12-26 08:20:00",
         },
         {
+            id: 15,
             sender: "noreply@streamingservice.com",
             subject: "New Episodes Available",
             body: "Season 3 of your favorite show is now available to stream.",
             time_sent: "2024-12-19 23:15:00",
         },
         {
+            id: 16,
             sender: "example@outlook.com",
             subject: "Hello welcome to example",
             body: "Thank you for using example.",
             time_sent: "2024-12-28 06:15:00",
         },
         {
+            id: 17,
             sender: "example@yahoo.com",
             subject: "Regarding last week's meeting",
             body: "Please see the new schedule proposed during the meeting.",
             time_sent: "2023-12-25 07:20:00",
         }
     ].sort((a, b) => new Date(b.time_sent) - new Date(a.time_sent)));
+
+    
+    const [selectedEmailId, setSelectedEmailId] = useState(null);
+
+    const handleEmailClick = (email) => {
+        onEmailClick(email);
+        setSelectedEmailId(email.id);
+    };
 
     
     return (
@@ -163,7 +183,8 @@ const EmailList = ({ onEmailClick }) => {
                     <DisplayNewEmail 
                         key={index} 
                         email={email}
-                        onEmailClick={onEmailClick}
+                        onEmailClick={handleEmailClick}
+                        isSelected={selectedEmailId === email.id}
                     />
                 ))}
             </div>

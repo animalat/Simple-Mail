@@ -50,6 +50,10 @@
     align-items: center;
 }
 
+.email-entry.selected {
+    background-color: #f0f0f0;
+}
+
 .email-list .email-entry:hover {
     background-color: #f0f0f0;
 }
