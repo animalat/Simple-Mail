@@ -11,7 +11,8 @@
 
 .email-list {
     height: 100vh;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     width: 350px;
     margin-left: 1.75em;
     padding-left: 25px;
@@ -38,6 +39,7 @@
 }
 
 .email-list > .email-entry {
+    flex: 0 0 auto;
     height: 80px;
     cursor: pointer;
     display: grid;
