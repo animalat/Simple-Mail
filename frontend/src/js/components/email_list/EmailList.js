@@ -45,7 +45,7 @@ const WhiteUnderlay = () => {
     );
 };
 
-const EmailList = ({ emailAddress, onEmailClick }) => {
+const EmailList = ({ emailAddress, groupId, onEmailClick }) => {
     const [emails, setEmails] = useState([]);
 
     useEffect(() => {

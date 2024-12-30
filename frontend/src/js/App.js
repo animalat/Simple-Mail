@@ -13,15 +13,19 @@ const App = () => {
         setSelectedEmail(email);
     };
 
+    const emailAddress = "";
+    
     return (
         <div>
-            <Sidebar />
+            <Sidebar 
+                emailAddress={emailAddress}
+            />
             <EmailDisplay 
-                email={ selectedEmail } 
-                from={ 'default' }
+                email={ selectedEmail }
             />
             <EmailList 
-                emailAddress={""}
+                emailAddress={emailAddress}
+                groupId={"INBOX"}
                 onEmailClick={handleEmailClick} 
             />
         </div>
