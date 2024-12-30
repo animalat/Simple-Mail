@@ -20,7 +20,10 @@ const App = () => {
                 email={ selectedEmail } 
                 from={ 'default' }
             />
-            <EmailList onEmailClick={handleEmailClick} />
+            <EmailList 
+                emailAddress={""}
+                onEmailClick={handleEmailClick} 
+            />
         </div>
     );
 };
