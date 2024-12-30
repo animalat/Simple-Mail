@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import SideNav, {
     Toggle,
     NavItem,
@@ -8,11 +7,10 @@ import SideNav, {
 } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
 import './Sidebar.css';
 import getGroups from "../../services/GroupService";
 
-const Sidebar = ({ emailAddress }) => {
+const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
     // Store accounts and folders in state
     const [accounts, setAccounts] = useState(["example1@outlook.com", "example2@gmail.com", "long.email.example@outlook.com"]);
 
@@ -70,7 +68,12 @@ const Sidebar = ({ emailAddress }) => {
                 </NavText>
 
                 {folders.map((folder, index) => (
-                    <NavItem key={index} eventKey={`folders/${folder.name}`}>
+                    <NavItem 
+                        className={`folder-item ${groupId == folder.group_id ? 'selected' : ''}`}
+                        key={index} 
+                        eventKey={`folders/${folder.name}`}
+                        onSelect={ () => { onGroupClick(folder.group_id) }}
+                    >
                         <NavText style={{ fontSize: '1.4em', paddingLeft: '20px' }}>
                             {folder.name}
                         </NavText>

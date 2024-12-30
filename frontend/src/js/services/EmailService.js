@@ -1,5 +1,5 @@
 const getEmails = (emailAddress, groupId) => {
-  return fetch(`http://localhost:8000/mailing/emails/?email_address=${emailAddress}`)
+  return fetch(`http://localhost:8000/mailing/emails/?email_address=${emailAddress}&group=${groupId}`)
     .then((response) => response.json())
     .then((data) => {
       return data;

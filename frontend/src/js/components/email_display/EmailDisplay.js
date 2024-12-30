@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import './EmailDisplay.css';
 
 const EmailDisplay = ({ email }) => {

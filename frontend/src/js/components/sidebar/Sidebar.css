@@ -6,3 +6,7 @@
     text-overflow: ellipsis;
     max-width: 500px;
 }
+
+.folder-item.selected {
+    background-color: #505051;
+}

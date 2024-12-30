@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import './EmailList.css';
 import getEmails from '../../services/EmailService';
 
@@ -47,10 +46,9 @@ const WhiteUnderlay = () => {
 
 const EmailList = ({ emailAddress, groupId, onEmailClick }) => {
     const [emails, setEmails] = useState([]);
-
     useEffect(() => {
-        getEmails(emailAddress).then((data) => setEmails(data));
-    }, [emailAddress]);
+        getEmails(emailAddress, groupId).then((data) => setEmails(data));
+    }, [emailAddress, groupId]);
     
     console.log(emails);
     const [selectedEmailId, setSelectedEmailId] = useState(null);

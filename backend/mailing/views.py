@@ -9,14 +9,20 @@ from .serializers import GroupSerializer, EmailSerializer
 class EmailListView(APIView):
     def get(self, request):
         email_address = request.query_params.get('email_address', None)
+        group = request.query_params.get('group', None)
 
         if not email_address:
             return Response(
                 {"error": "email_address query parameter not found"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-    
-        emails = Email.objects.filter(groups__email_address__address=email_address).distinct()
+        if not group:
+            return Response(
+                {"error": "group query parameter not found"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        emails = Email.objects.filter(groups__email_address__address=email_address, groups__group_id=group).distinct()
         serializer = EmailSerializer(emails, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
