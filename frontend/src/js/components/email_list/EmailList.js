@@ -22,10 +22,14 @@ const formatDate = (dateString) => {
     }
 };
 
+const isInGroup = (email, groupId) => {
+    return email.groups.some(group => group.group_id == groupId);
+}
+
 const DisplayNewEmail = ({ email, onEmailClick, isSelected }) => {
     return (
        <div 
-            className={`email-entry ${isSelected ? 'selected' : ''}`}
+            className={`email-entry ${isSelected ? 'selected' : ''} ${isInGroup(email, 'UNREAD') ? 'unread' : ''}`}
             onClick={() => { onEmailClick(email); }}
         >
             <div className="email-details">

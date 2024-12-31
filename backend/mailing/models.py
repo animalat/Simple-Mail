@@ -29,6 +29,16 @@ class Email(models.Model):
     time_sent = models.DateTimeField(null=True, blank=True)
     groups = models.ManyToManyField(Group, related_name='emails')
 
+    def sanitizeHTML(self):
+        # TODO: Sanitize HTML
+        return
+
+    def save(self, *args, **kwargs):
+        if self.html_content:
+            self.sanitizeHTML()
+        
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.subject
     

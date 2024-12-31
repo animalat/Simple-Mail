@@ -41,16 +41,24 @@
     align-items: center;
 }
 
-.email-entry.selected {
-    background-color: #f0f0f0;
-}
-
 .email-list .email-entry:hover {
     background-color: #f0f0f0;
 }
 
 .email-list > .email-entry:not(:last-child) {
     border-bottom: none;
+}
+
+.email-entry.selected {
+    background-color: #f0f0f0;
+}
+
+.email-entry.unread {
+    background-color: #bce9ff;
+}
+
+.email-entry.unread:hover {
+    background-color: rgb(209, 221, 230);
 }
 
 .email-list > .email-entry:is(:first-child) {
