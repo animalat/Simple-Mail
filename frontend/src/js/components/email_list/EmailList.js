@@ -38,12 +38,6 @@ const DisplayNewEmail = ({ email, onEmailClick, isSelected }) => {
     );
 };
 
-const WhiteUnderlay = () => {
-    return (
-        <div className="white-underlay"></div>
-    );
-};
-
 const EmailList = ({ emailAddress, groupId, onEmailClick }) => {
     const [emails, setEmails] = useState([]);
     useEffect(() => {
@@ -60,18 +54,15 @@ const EmailList = ({ emailAddress, groupId, onEmailClick }) => {
 
     
     return (
-        <div>
-            <div className="email-list">
-                {emails.map((email, index) => (
-                    <DisplayNewEmail 
-                        key={index} 
-                        email={email}
-                        onEmailClick={handleEmailClick}
-                        isSelected={selectedEmailId === email.id}
-                    />
-                ))}
-            </div>
-            <WhiteUnderlay />
+        <div className="email-list">
+            {emails.map((email, index) => (
+                <DisplayNewEmail 
+                    key={index} 
+                    email={email}
+                    onEmailClick={handleEmailClick}
+                    isSelected={selectedEmailId === email.id}
+                />
+            ))}
         </div>
     );
 };

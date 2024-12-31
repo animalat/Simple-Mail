@@ -1,16 +1,5 @@
-.white-underlay {
-    height: 100vh;
-    width: 350px;
-    margin-left: 1.75em;
-    padding-left: 25px;
-    border-right: 1px solid #C5C5C5;
-    background-color: #fff;
-    box-shadow: 0 0px 10px #C5C5C5;
-    z-index: 0;
-}
-
 .email-list {
-    height: 100vh;
+    height: calc(100vh - 18px);
     display: flex;
     flex-direction: column;
     width: 350px;
