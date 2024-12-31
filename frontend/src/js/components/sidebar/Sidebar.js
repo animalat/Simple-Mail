@@ -19,69 +19,53 @@ const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
         getGroups(emailAddress).then((data) => setFolders(data));
     }, [emailAddress]);
 
-    const addAccount = (account) => {
-        setAccounts([...accounts, account]);
-    };
-
-    const removeAccount = (account) => {
-        setAccounts(accounts.filter(a => a !== account));
-    };
-
-    const addFolder = (folder) => {
-        setFolders([...folders, folder]);
-    };
-
-    const removeFolder = (folder) => {
-        setFolders(folders.filter(f => f !== folder));
-    };
-
     return (
-    <SideNav 
-        className="sidebar-custom"
-        onToggle={() => {}}
-    >
-        <SideNav.Toggle />
-        <SideNav.Nav>
-            <NavItem eventKey="accounts" expanded={true}>
-                <NavIcon>
-                    <i className="fa fa-fw fa-user" style={{ fontSize: '1.75em' }} />
-                </NavIcon>
-                <NavText style={{ fontSize: '1.4em' }}>
-                    Accounts
-                </NavText>
+        <SideNav 
+            className="sidebar-custom"
+            onToggle={() => {}}
+        >
+            <SideNav.Toggle />
+            <SideNav.Nav>
+                <NavItem eventKey="accounts" expanded={true}>
+                    <NavIcon>
+                        <i className="fa fa-fw fa-user" style={{ fontSize: '1.75em' }} />
+                    </NavIcon>
+                    <NavText style={{ fontSize: '1.4em' }}>
+                        Accounts
+                    </NavText>
 
-                {accounts.map((account, index) => (
-                    <NavItem key={index} eventKey={`accounts/${account}`}>
-                        <NavText style={{ fontSize: '1.4em', paddingLeft: '20px' }}>
-                            {account}
-                        </NavText>
-                    </NavItem>
-                ))}
-            </NavItem>
-            
-            <NavItem eventKey="folders" expanded={true}>
-                <NavIcon>
-                    <i className="fas fa-folder" style={{ fontSize: '1.75em' }} />
-                </NavIcon>
-                <NavText style={{ fontSize: '1.4em' }}>
-                    Folders
-                </NavText>
+                    {accounts.map((account, index) => (
+                        <NavItem key={index} eventKey={`accounts/${account}`}>
+                            <NavText style={{ fontSize: '1.4em', paddingLeft: '20px' }}>
+                                {account}
+                            </NavText>
+                        </NavItem>
+                    ))}
+                </NavItem>
+                
+                <NavItem eventKey="folders" expanded={true}>
+                    <NavIcon>
+                        <i className="fas fa-folder" style={{ fontSize: '1.75em' }} />
+                    </NavIcon>
+                    <NavText style={{ fontSize: '1.4em' }}>
+                        Folders
+                    </NavText>
 
-                {folders.map((folder, index) => (
-                    <NavItem 
-                        className={`folder-item ${groupId == folder.group_id ? 'selected' : ''}`}
-                        key={index} 
-                        eventKey={`folders/${folder.name}`}
-                        onSelect={ () => { onGroupClick(folder.group_id) }}
-                    >
-                        <NavText style={{ fontSize: '1.4em', paddingLeft: '20px' }}>
-                            {folder.name}
-                        </NavText>
-                    </NavItem>
-                ))}
-            </NavItem>
-        </SideNav.Nav>
-    </SideNav>
+                    {folders.map((folder, index) => (
+                        <NavItem 
+                            className={`folder-item ${groupId == folder.group_id ? 'selected' : ''}`}
+                            key={index} 
+                            eventKey={`folders/${folder.name}`}
+                            onSelect={ () => { onGroupClick(folder.group_id) }}
+                        >
+                            <NavText style={{ fontSize: '1.4em', paddingLeft: '20px' }}>
+                                {folder.name}
+                            </NavText>
+                        </NavItem>
+                    ))}
+                </NavItem>
+            </SideNav.Nav>
+        </SideNav>
     );
 };
 
