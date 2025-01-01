@@ -20,7 +20,7 @@ from mailing.models import EmailAddress, Group, Email
 from gmail_integration.gmail_functions import get_user_email_address, read_labels, read_messages
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
+SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
 
 current_dir = os.path.dirname(__file__)
 credentials_path = os.path.join(current_dir, "credentials.json")
@@ -45,6 +45,8 @@ def main():
     # Save the credentials for the next run
     with open(token_path, "w") as token:
       token.write(creds.to_json())
+
+  return creds
 
   email_address_instance = get_user_email_address(creds)
   print(email_address_instance)

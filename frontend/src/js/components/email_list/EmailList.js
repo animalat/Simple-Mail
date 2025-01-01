@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './EmailList.css';
 import getEmails from '../../services/EmailService';
+import { removeGroupFromEmail } from '../../services/GroupService'
 
 const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -26,11 +27,17 @@ const isInGroup = (email, groupId) => {
     return email.groups.some(group => group.group_id == groupId);
 }
 
-const DisplayNewEmail = ({ email, onEmailClick, isSelected }) => {
+const DisplayNewEmail = ({ emailAddress, email, onEmailClick, isSelected }) => {
+    const isUnread = isInGroup(email, 'UNREAD');
     return (
        <div 
-            className={`email-entry ${isSelected ? 'selected' : ''} ${isInGroup(email, 'UNREAD') ? 'unread' : ''}`}
-            onClick={() => { onEmailClick(email); }}
+            className={`email-entry ${isSelected ? 'selected' : ''} ${ isUnread ? 'unread' : ''}`}
+            onClick={() => { 
+                onEmailClick(email);
+                if (isUnread) {
+                    removeGroupFromEmail(emailAddress, 'UNREAD', email.message_id);
+                }
+            }}
         >
             <div className="email-details">
                 <div className="email-sender">{email.sender}</div>
@@ -60,7 +67,8 @@ const EmailList = ({ emailAddress, groupId, onEmailClick }) => {
     return (
         <div className="email-list">
             {emails.map((email, index) => (
-                <DisplayNewEmail 
+                <DisplayNewEmail
+                    emailAddress={emailAddress} 
                     key={index} 
                     email={email}
                     onEmailClick={handleEmailClick}

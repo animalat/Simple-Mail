@@ -8,7 +8,7 @@ import SideNav, {
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './Sidebar.css';
-import getGroups from "../../services/GroupService";
+import { getGroups } from "../../services/GroupService";
 
 const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
     // Store accounts and folders in state

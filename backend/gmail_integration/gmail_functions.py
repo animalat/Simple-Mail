@@ -147,6 +147,23 @@ def read_messages(creds, email_address):
     except HttpError as error:
         gmail_error(error)
 
+def remove_group_from_email(creds, email_address, email_id, group_id):
+    service = build("gmail", "v1", credentials=creds)
+    try:
+        # remove group from email in Gmail
+        service.users().messages().modify(
+            userId=email_address,
+            id=email_id,
+            body={
+                'removeLabelIds': [group_id]
+            }
+        ).execute()
+
+        # remove group from email in db
+        Email.objects.get(message_id=email_id).groups.remove(Group.objects.get(group_id=group_id))
+    except Exception as e:
+        gmail_error(e)
+
 def gmail_error(error):
     # TODO(developer) - Handle errors from gmail API.
     print(f"An error occurred: {error}")
