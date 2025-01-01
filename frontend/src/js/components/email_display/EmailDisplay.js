@@ -2,9 +2,10 @@ import React from "react";
 import "./EmailDisplay.css";
 
 const EmailDisplay = ({ email }) => {
-    const renderHtmlContent = () => {
-        if (!email.html_content) return null;
+    // don't display box if no email
+    if (!email.html_content) return null;
 
+    const renderHtmlContent = () => {
         return (
             <div
                 className="email-html-content"
