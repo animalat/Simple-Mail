@@ -46,34 +46,36 @@ class GroupView(APIView):
 
 class RemoveGroupView(APIView):
     def post(self, request):
-        email_address = request.query_params.get('email_address', None)
-        group = request.query_params.get('group', None)
-        email = request.query_params.get('email', None)
+        email_address = request.data.get('email_address')
+        group = request.data.get('group')
+        email = request.data.get('email')
 
         # make sure params are given
         if not email_address:
             return Response(
-                {"error": "email_address query parameter not found"},
+                {"error": "email_address not found"},
                 status=status.HTTP_400_BAD_REQUEST
             )
         elif not group:
             return Response(
-                {"error": "group (id) query parameter not found"},
+                {"error": "group (id) not found"},
                 status=status.HTTP_400_BAD_REQUEST
             )
         elif not email:
             return Response(
-                {"error": "email (id) query parameter not found"},
+                {"error": "email (id) not found"},
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        print(email_address, email, group)
         # try to call function
         try:
             remove_group_from_email(creds=main(), email_address=email_address, group_id=group, email_id=email)
-            return Response(status=status.HTTP_200_OK)
+            return Response(
+                {"message": "Group removed successfully"}, 
+                status=status.HTTP_200_OK
+            )
         except Exception as e:
             return Response(
                 {"error": str(e)},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

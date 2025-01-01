@@ -126,7 +126,7 @@ def read_messages(creds, email_address):
             time_sent = datetime.fromtimestamp(epoch_seconds, tz=timezone.utc)
 
             email, created = Email.objects.get_or_create(
-                message_id = message["id"],
+                message_id=message["id"],
                 defaults={
                     "sender": sender,
                     "recipient": recipient,
@@ -138,6 +138,31 @@ def read_messages(creds, email_address):
                     "time_sent": time_sent
                 }
             )
+
+            # check and update fields which changed
+            if not created:
+                fields_to_update = {}
+                if email.sender != sender:
+                    fields_to_update["sender"] = sender
+                if email.recipient != recipient:
+                    fields_to_update["recipient"] = recipient
+                if email.subject != subject:
+                    fields_to_update["subject"] = subject
+                if email.body != body:
+                    fields_to_update["body"] = body
+                if email.html_content != html_content:
+                    fields_to_update["html_content"] = html_content
+                if email.attachments != attachments:
+                    fields_to_update["attachments"] = attachments
+                if email.inline_images != inline_images:
+                    fields_to_update["inline_images"] = inline_images
+                if email.time_sent != time_sent:
+                    fields_to_update["time_sent"] = time_sent
+
+                if fields_to_update:
+                    for field, value in fields_to_update.items():
+                        setattr(email, field, value)
+                    email.save()
             email.groups.add(*groups)
 
             print(f"Message: {body} Created: {created}")

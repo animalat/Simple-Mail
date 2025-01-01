@@ -29,15 +29,24 @@ const isInGroup = (email, groupId) => {
 
 const DisplayNewEmail = ({ emailAddress, email, onEmailClick, isSelected }) => {
     const isUnread = isInGroup(email, 'UNREAD');
-    return (
-       <div 
-            className={`email-entry ${isSelected ? 'selected' : ''} ${ isUnread ? 'unread' : ''}`}
-            onClick={() => { 
-                onEmailClick(email);
-                if (isUnread) {
-                    removeGroupFromEmail(emailAddress, 'UNREAD', email.message_id);
+
+    const handleEmailClick = () => {
+        onEmailClick(email);
+        if (isUnread) {
+            removeGroupFromEmail(emailAddress, 'UNREAD', email.message_id).then((success) => {
+                if (success) {
+                    // // Update email groups locally
+                    // const updatedGroups = email.groups.filter(group => group.group_id !== 'UNREAD');
+                    // updateEmailGroups(email.message_id, updatedGroups);
                 }
-            }}
+            });
+        }
+    };
+
+    return (
+        <div 
+            className={`email-entry ${isSelected ? 'selected' : ''} ${isUnread ? 'unread' : ''}`}
+            onClick={handleEmailClick}
         >
             <div className="email-details">
                 <div className="email-sender">{email.sender}</div>
@@ -45,24 +54,24 @@ const DisplayNewEmail = ({ emailAddress, email, onEmailClick, isSelected }) => {
                 <div className="email-body-preview">{email.body.slice(0, 50)}...</div>
             </div>
             <div className="email-time">{formatDate(email.time_sent)}</div>
-       </div> 
+        </div>
     );
 };
 
+
 const EmailList = ({ emailAddress, groupId, onEmailClick }) => {
+    // store emails
     const [emails, setEmails] = useState([]);
     useEffect(() => {
         getEmails(emailAddress, groupId).then((data) => setEmails(data));
     }, [emailAddress, groupId]);
     
-    console.log(emails);
+    // for storing currently selected email
     const [selectedEmailId, setSelectedEmailId] = useState(null);
-
     const handleEmailClick = (email) => {
         onEmailClick(email);
         setSelectedEmailId(email.id);
     };
-
     
     return (
         <div className="email-list">

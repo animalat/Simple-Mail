@@ -57,10 +57,6 @@
     background-color: #bce9ff;
 }
 
-.email-entry.unread:hover {
-    background-color: rgb(209, 221, 230);
-}
-
 .email-list > .email-entry:is(:first-child) {
     border-top: none;
 }

@@ -10,15 +10,32 @@ export const getGroups = (emailAddress) => {
         });
 };
 
-export const removeGroupFromEmail = (emailAddress, groupId, messageId) => {
-    console.log(emailAddress, groupId, messageId)
-    return fetch(`http://localhost:8000/mailing/remove-group/?email_address=${emailAddress}&group=${groupId}&email=${messageId}`)
-        .then((response) => response.json())
-        .then(() => {
-            return true;
+export const removeGroupFromEmail = (emailAddress, groupId, emailId) => {
+    return fetch('http://localhost:8000/mailing/remove-group/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email_address: emailAddress,
+            group: groupId,
+            email: emailId,
+        }),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                return response.json().then((data) => {
+                    console.error('Error:', data.error);
+                    return false;
+                });
+            }
+            return response.json().then((data) => {
+                console.log('Success:', data.message);
+                return true;
+            });
         })
         .catch((error) => {
-            console.error("Error removing group:", error);
+            console.error('Request failed:', error);
             return false;
         });
-}
+};
