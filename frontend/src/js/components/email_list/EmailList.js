@@ -27,17 +27,21 @@ const isInGroup = (email, groupId) => {
     return email.groups.some(group => group.group_id == groupId);
 }
 
-const DisplayNewEmail = ({ emailAddress, email, onEmailClick, isSelected }) => {
+const DisplayNewEmail = ({ emailAddress, email, onEmailClick, isSelected, updateEmailGroups }) => {
     const isUnread = isInGroup(email, 'UNREAD');
 
     const handleEmailClick = () => {
         onEmailClick(email);
+    
         if (isUnread) {
+            // update UI
+            const updatedGroups = email.groups.filter((group) => group.group_id !== 'UNREAD');
+            updateEmailGroups(email.message_id, updatedGroups);
+    
             removeGroupFromEmail(emailAddress, 'UNREAD', email.message_id).then((success) => {
-                if (success) {
-                    // // Update email groups locally
-                    // const updatedGroups = email.groups.filter(group => group.group_id !== 'UNREAD');
-                    // updateEmailGroups(email.message_id, updatedGroups);
+                if (!success) {
+                    // if the request fails, revert change
+                    updateEmailGroups(email.message_id, [...updatedGroups, { group_id: 'UNREAD' }]);
                 }
             });
         }
@@ -58,30 +62,42 @@ const DisplayNewEmail = ({ emailAddress, email, onEmailClick, isSelected }) => {
     );
 };
 
-
 const EmailList = ({ emailAddress, groupId, onEmailClick }) => {
     // store emails
     const [emails, setEmails] = useState([]);
+
     useEffect(() => {
         getEmails(emailAddress, groupId).then((data) => setEmails(data));
     }, [emailAddress, groupId]);
-    
-    // for storing currently selected email
+
+    // handle selected email
     const [selectedEmailId, setSelectedEmailId] = useState(null);
     const handleEmailClick = (email) => {
         onEmailClick(email);
         setSelectedEmailId(email.id);
     };
-    
+
+    // update groups locally for email
+    const updateEmailGroups = (messageId, newGroups) => {
+        setEmails((prevEmails) =>
+            prevEmails.map((email) =>
+                email.message_id === messageId
+                    ? { ...email, groups: newGroups }
+                    : email
+            )
+        );
+    };
+
     return (
         <div className="email-list">
             {emails.map((email, index) => (
                 <DisplayNewEmail
-                    emailAddress={emailAddress} 
-                    key={index} 
+                    emailAddress={emailAddress}
+                    key={index}
                     email={email}
                     onEmailClick={handleEmailClick}
                     isSelected={selectedEmailId === email.id}
+                    updateEmailGroups={updateEmailGroups}
                 />
             ))}
         </div>
