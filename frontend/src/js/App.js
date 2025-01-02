@@ -15,6 +15,8 @@ const App = () => {
         setSelectedGroup(group);
     };
 
+    const [emailDisplayState, setEmailDisplayState] = useState("view");
+
     const emailAddress = "";
     
     return (
@@ -26,6 +28,7 @@ const App = () => {
             />
             <EmailDisplay 
                 email={selectedEmail}
+                mode={emailDisplayState}
             />
             <EmailList 
                 emailAddress={emailAddress}

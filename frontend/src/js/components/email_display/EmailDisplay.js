@@ -1,9 +1,11 @@
 import React from "react";
 import "./EmailDisplay.css";
 
-const EmailDisplay = ({ email }) => {
+const EmailDisplay = ({ email, mode }) => {
+    const isView = (mode === "view");
+
     // don't display box if no email
-    if (!email.html_content) return null;
+    if (!email.html_content && isView) return null;
 
     const renderHtmlContent = () => {
         return (
@@ -54,20 +56,68 @@ const EmailDisplay = ({ email }) => {
 
     return (
         <div className="email-display">
-            <h2>{email.subject}</h2>
+            <div className="email-from">
+                {isView ? (
+                    <p>
+                        <span className="label-box">From:</span> 
+                        <span className="field-text">{email.sender}</span>
+                    </p>
+                    ) : null
+                }
+            </div>
+
             <p>
-                <strong>From:</strong> {email.sender}
+                <div className="email-to">
+                    <span className="label-box">To: </span> 
+                    {isView ? (
+                        <span className="field-text">{email.recipient}</span>
+                        ) : (
+                            <input
+                                className="to-input"
+                            />
+                        )
+                    }
+                </div>
             </p>
-            <p>
-                <strong>To:</strong> {email.recipient}
-            </p>
-            <p>
-                <strong>Sent:</strong>{" "}
-                {new Date(email.time_sent).toLocaleTimeString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric', year: 'numeric' })}
-            </p>
-            {renderHtmlContent()}
-            {renderAttachments()}
-            {renderInlineImages()}
+
+            <div className="email-subject">
+                {isView ? (
+                        <h2>
+                            {email.subject}
+                        </h2>
+                    ) : (
+                            <input 
+                                placeholder="Add subject"
+                                className="subject-input"
+                            />
+                    )
+                }
+            </div>
+            
+            <div className="email-date">
+                {isView ? (
+                    <p>
+                        <span className="label-box">Sent:</span> 
+                        <span className="field-text">
+                            {new Date(email.time_sent).toLocaleTimeString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric', year: 'numeric' })}
+                        </span>
+                    </p>
+                    ) : null
+                }
+            </div>
+
+            <div className="email-body">
+                {isView ? renderHtmlContent() : null}
+                {isView ? renderAttachments() : null}
+                {isView ? renderInlineImages() : null}
+                {!isView ? (
+                    <textarea 
+                        placeholder="Write your email here"
+                        className="email-body-textarea"
+                    />
+                    ) : null
+                }
+            </div>
         </div>
     );
 };
