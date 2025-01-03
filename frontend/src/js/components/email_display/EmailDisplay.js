@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./EmailDisplay.css";
 
-const EmailDisplay = ({ email, mode }) => {
+const EmailDisplay = ({ email, mode, signedInEmail }) => {
     const isView = (mode === "view");
 
     // don't display box if no email
@@ -70,13 +70,16 @@ const EmailDisplay = ({ email, mode }) => {
     return (
         <div className="email-display">
             <div className="email-from">
-                {isView ? (
-                    <p>
-                        <span className="label-box">From:</span> 
-                        <span className="field-text">{email.sender}</span>
-                    </p>
-                    ) : null
-                }
+                <p>
+                    {!isView ? ( 
+                        <button className="send-button">
+                            <i class="fa-regular fa-paper-plane"></i>
+                            &nbsp;Send&nbsp;
+                        </button>
+                        ) : null}
+                    <span className="label-box">&nbsp;From:</span> 
+                    <span className="field-text">{isView ? email.sender : signedInEmail}</span>
+                </p>
             </div>
 
             <p>

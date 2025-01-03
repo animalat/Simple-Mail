@@ -5,8 +5,18 @@ import EmailList from './components/email_list/EmailList';
 import EmailDisplay from './components/email_display/EmailDisplay';
 
 const App = () => {
+    const [emailDisplayState, setEmailDisplayState] = useState("draft");
+    const setViewMode = () => {
+        setEmailDisplayState("view");
+        setSelectedEmail({});
+    };
+    const setDraftMode = () => {
+        setEmailDisplayState("draft");
+    }
+    
     const [selectedEmail, setSelectedEmail] = useState({});
     const handleEmailClick = (email) => {
+        setViewMode();
         setSelectedEmail(email);
     };
 
@@ -14,8 +24,6 @@ const App = () => {
     const handleGroupClick = (group) => {
         setSelectedGroup(group);
     };
-
-    const [emailDisplayState, setEmailDisplayState] = useState("view");
 
     const emailAddress = "";
     
@@ -29,6 +37,7 @@ const App = () => {
             <EmailDisplay 
                 email={selectedEmail}
                 mode={emailDisplayState}
+                signedInEmail={emailAddress}
             />
             <EmailList 
                 emailAddress={emailAddress}
