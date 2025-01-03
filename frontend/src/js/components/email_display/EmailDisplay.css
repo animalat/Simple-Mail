@@ -12,17 +12,17 @@
     max-height: 100vh;
 }
 
-.email-display::-webkit-scrollbar {
+.email-display::-webkit-scrollbar, .email-body-textarea::-webkit-scrollbar {
     width: 4px;
     height: 4px;
 }
 
-.email-display::-webkit-scrollbar-thumb {
+.email-display::-webkit-scrollbar-thumb, .email-body-textarea::-webkit-scrollbar-thumb {
     background-color: #C5C5C5;
     border-radius: 4px;
 }
 
-.email-display::-webkit-scrollbar-thumb:hover {
+.email-display::-webkit-scrollbar-thumb:hover, .email-body-textarea::-webkit-scrollbar-thumb::hover {
     background-color: #b0b0b0;
 }
 

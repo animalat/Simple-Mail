@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./EmailDisplay.css";
 
 const EmailDisplay = ({ email, mode }) => {
@@ -54,6 +54,19 @@ const EmailDisplay = ({ email, mode }) => {
         );
     };
 
+    const [sendRecipient, setSendRecipient] = useState("");
+    const [sendSubject, setSendSubject] = useState("");
+    const [sendBody, setSendBody] = useState("");
+
+    const handleSubmit = () => {
+        const emailData = {
+            sendRecipient,
+            sendSubject,
+            sendBody,
+        };
+        // onSubmit(emailData); handle submit
+    };
+
     return (
         <div className="email-display">
             <div className="email-from">
@@ -74,6 +87,8 @@ const EmailDisplay = ({ email, mode }) => {
                         ) : (
                             <input
                                 className="to-input"
+                                value={sendRecipient}
+                                onChange={(e) => setSendSendRecipient(e.target.value)}
                             />
                         )
                     }
@@ -89,6 +104,8 @@ const EmailDisplay = ({ email, mode }) => {
                             <input 
                                 placeholder="Add subject"
                                 className="subject-input"
+                                value={sendSubject}
+                                onChange={(e) => setSendSubject(e.target.value)}
                             />
                     )
                 }
@@ -114,6 +131,8 @@ const EmailDisplay = ({ email, mode }) => {
                     <textarea 
                         placeholder="Write your email here"
                         className="email-body-textarea"
+                        value={sendBody}
+                        onChange={(e) => setSendBody(e.target.value)}
                     />
                     ) : null
                 }

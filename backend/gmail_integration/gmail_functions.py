@@ -4,6 +4,7 @@ import base64
 from datetime import datetime, timezone
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from email.mime.text import MIMEText
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailbackend.settings")
 
