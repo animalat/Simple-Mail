@@ -38,6 +38,7 @@ const App = () => {
                 email={selectedEmail}
                 mode={emailDisplayState}
                 signedInEmail={emailAddress}
+                setViewMode={setViewMode}
             />
             <EmailList 
                 emailAddress={emailAddress}

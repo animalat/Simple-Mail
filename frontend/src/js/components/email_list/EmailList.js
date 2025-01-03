@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './EmailList.css';
-import getEmails from '../../services/EmailService';
+import { getEmails } from '../../services/EmailService';
 import { removeGroupFromEmail } from '../../services/GroupService'
 
 const formatDate = (dateString) => {

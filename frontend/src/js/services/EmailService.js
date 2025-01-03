@@ -1,4 +1,4 @@
-const getEmails = (emailAddress, groupId) => {
+export const getEmails = (emailAddress, groupId) => {
   return fetch(`http://localhost:8000/mailing/emails/?email_address=${emailAddress}&group=${groupId}`)
     .then((response) => response.json())
     .then((data) => {
@@ -10,4 +10,34 @@ const getEmails = (emailAddress, groupId) => {
     });
 }
 
-export default getEmails;
+export const sendEmail = (emailAddress, recipient, subject, body, attachment = null) => {
+  const formData = new FormData();
+  formData.append("email_address", emailAddress);
+  formData.append("recipient", recipient);
+  formData.append("subject", subject);
+  formData.append("body", body);
+  if (attachment) {
+      formData.append("attachment", attachment);
+  }
+
+  return fetch('http://localhost:8000/mailing/send-email/', {
+      method: 'POST',
+      body: formData,
+  })
+      .then((response) => {
+          if (!response.ok) {
+              return response.json().then((data) => {
+                  console.error('Error:', data.error);
+                  throw new Error(data.error);
+              });
+          }
+          return response.json().then((data) => {
+              console.log('Success:', data.message);
+              return data;
+          });
+      })
+      .catch((error) => {
+          console.error('Request failed:', error);
+          throw error;
+      });
+};

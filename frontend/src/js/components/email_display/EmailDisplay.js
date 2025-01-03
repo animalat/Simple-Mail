@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { sendEmail } from "../../services/EmailService";
 import "./EmailDisplay.css";
 
-const EmailDisplay = ({ email, mode, signedInEmail }) => {
+const EmailDisplay = ({ email, mode, signedInEmail, setViewMode }) => {
     const isView = (mode === "view");
 
     // don't display box if no email
@@ -59,12 +60,15 @@ const EmailDisplay = ({ email, mode, signedInEmail }) => {
     const [sendBody, setSendBody] = useState("");
 
     const handleSubmit = () => {
-        const emailData = {
-            sendRecipient,
-            sendSubject,
-            sendBody,
-        };
-        // onSubmit(emailData); handle submit
+        try {
+            sendEmail(signedInEmail, sendRecipient, sendSubject, sendBody);
+            setSendRecipient("");
+            setSendSubject("");
+            setSendSubject("");
+            setViewMode();
+        } catch {
+            return;
+        }
     };
 
     return (
@@ -72,8 +76,11 @@ const EmailDisplay = ({ email, mode, signedInEmail }) => {
             <div className="email-from">
                 <p>
                     {!isView ? ( 
-                        <button className="send-button">
-                            <i class="fa-regular fa-paper-plane"></i>
+                        <button 
+                            className="send-button"
+                            onClick={ () => handleSubmit() }
+                        >
+                            <i className="fa-regular fa-paper-plane"></i>
                             &nbsp;Send&nbsp;
                         </button>
                         ) : null}
@@ -82,8 +89,8 @@ const EmailDisplay = ({ email, mode, signedInEmail }) => {
                 </p>
             </div>
 
-            <p>
-                <div className="email-to">
+            <div className="email-to">
+                <p>
                     <span className="label-box">To: </span> 
                     {isView ? (
                         <span className="field-text">{email.recipient}</span>
@@ -91,12 +98,12 @@ const EmailDisplay = ({ email, mode, signedInEmail }) => {
                             <input
                                 className="to-input"
                                 value={sendRecipient}
-                                onChange={(e) => setSendSendRecipient(e.target.value)}
+                                onChange={(e) => setSendRecipient(e.target.value)}
                             />
                         )
                     }
-                </div>
-            </p>
+                </p>
+            </div>
 
             <div className="email-subject">
                 {isView ? (

@@ -1,10 +1,12 @@
 import os
-import time
 import base64
 from datetime import datetime, timezone
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mailbackend.settings")
 
@@ -190,23 +192,35 @@ def remove_group_from_email(creds, email_address, email_id, group_id):
     except Exception as e:
         gmail_error(e)
 
-def create_message(sender, to, subject, body):
-    message = MIMEText(body)
+def create_message(sender, to, subject, body, attachment=None):
+    message = MIMEMultipart()
     message['to'] = to
     message['from'] = sender
     message['subject'] = subject
+
+    message.attach(MIMEText(body, 'plain'))
+
+    if attachment:
+        part = MIMEBase('application', 'octet-stream')
+        part.set_payload(attachment.read())
+        encoders.encode_base64(part)
+        part.add_header(
+            'Content-Disposition',
+            f'attachment; filename="{attachment.name}"'
+        )
+        message.attach(part)
+
     raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
     return {'raw': raw_message}
 
-def send_email(creds, sender, to, subject, body):
+def send_email(creds, sender, to, subject, body, attachment=None):
     service = build("gmail", "v1", credentials=creds)
     try:
-        email_message = create_message(sender, to, subject, body)
+        email_message = create_message(sender, to, subject, body, attachment)
         result = service.users().messages().send(userId="me", body=email_message).execute()
-        return
+        return {"status": "success", "message_id": result.get('id')}
     except Exception as e:
-        print(f"An error occured: {e}")
-        return
+        return {"status": "error", "error": str(e)}
 
 def gmail_error(error):
     # TODO(developer) - Handle errors from gmail API.

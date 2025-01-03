@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Group, Email
 from .serializers import GroupSerializer, EmailSerializer
-from gmail_integration.gmail_functions import remove_group_from_email
+from gmail_integration.gmail_functions import send_email, remove_group_from_email
 from gmail_integration.gmail import main
 
 class EmailListView(APIView):
@@ -26,6 +26,55 @@ class EmailListView(APIView):
         serializer = EmailSerializer(emails, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class SendEmailView(APIView):
+    def post(self, request):
+        email_address = request.data.get('email_address')
+        recipient = request.data.get('recipient')
+        subject = request.data.get('subject')
+        body = request.data.get('body')
+        attachment = request.FILES.get('attachment, None')
+        
+        if not email_address:
+            return Response(
+                {"error": "Sender email address not provided"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if not recipient:
+            return Response(
+                {"error": "Recipient email address not provided"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if not subject:
+            return Response(
+                {"error": "Email subject not provided"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if not body:
+            return Response(
+                {"error": "Email body not provided"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            creds = main()
+
+            send_email(
+                creds=creds,
+                sender=email_address,
+                to=recipient,
+                subject=subject,
+                body=body,
+                attachment=attachment
+            )
+            return Response(
+                {"message": "Email successfully sent"},
+                status=status.HTTP_200_OK
+            )
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class GroupView(APIView):
     def get(self, request):
