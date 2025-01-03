@@ -190,6 +190,24 @@ def remove_group_from_email(creds, email_address, email_id, group_id):
     except Exception as e:
         gmail_error(e)
 
+def create_message(sender, to, subject, body):
+    message = MIMEText(body)
+    message['to'] = to
+    message['from'] = sender
+    message['subject'] = subject
+    raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
+    return {'raw': raw_message}
+
+def send_email(creds, sender, to, subject, body):
+    service = build("gmail", "v1", credentials=creds)
+    try:
+        email_message = create_message(sender, to, subject, body)
+        result = service.users().messages().send(userId="me", body=email_message).execute()
+        return
+    except Exception as e:
+        print(f"An error occured: {e}")
+        return
+
 def gmail_error(error):
     # TODO(developer) - Handle errors from gmail API.
     print(f"An error occurred: {error}")
