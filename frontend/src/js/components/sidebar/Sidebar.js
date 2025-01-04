@@ -21,6 +21,10 @@ const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
         }, [emailAddress]);
     }
 
+    const draftEmail = () => {
+        console.log("this is where a new email will be drafted.")
+    };
+
     return (
         <SideNav 
             className="sidebar-custom"
@@ -28,6 +32,21 @@ const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
         >
             <SideNav.Toggle />
             <SideNav.Nav>
+                {/* Draft Email Button */}
+                <NavItem 
+                    eventKey="draft" 
+                    expanded={false}
+                    onSelect={draftEmail}
+                >
+                    <NavIcon>
+                        <i class="fa-solid fa-envelope" style={{ fontSize: '1.75em' }} />
+                    </NavIcon>
+                    <NavText style={{ fontSize: '1.4em' }}>
+                        New Mail
+                    </NavText>
+                </NavItem>
+
+                {/* Accounts */}
                 <NavItem eventKey="accounts" expanded={true}>
                     <NavIcon>
                         <i className="fa fa-fw fa-user" style={{ fontSize: '1.75em' }} />
@@ -45,6 +64,7 @@ const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
                     ))}
                 </NavItem>
                 
+                {/* Folders */}
                 <NavItem eventKey="folders" expanded={true}>
                     <NavIcon>
                         <i className="fas fa-folder" style={{ fontSize: '1.75em' }} />
