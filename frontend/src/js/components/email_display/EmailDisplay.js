@@ -75,16 +75,19 @@ const EmailDisplay = ({ email, mode, signedInEmail, setViewMode }) => {
         <div className="email-display">
             <div className="email-from">
                 <p>
-                    {!isView ? ( 
-                        <button 
-                            className="send-button"
-                            onClick={ () => handleSubmit() }
-                        >
-                            <i className="fa-regular fa-paper-plane"></i>
-                            &nbsp;Send&nbsp;
-                        </button>
+                    {!isView ? (
+                        <span> 
+                            <button 
+                                className="send-button"
+                                onClick={ () => handleSubmit() }
+                            >
+                                <i className="fa-regular fa-paper-plane"></i>
+                                &nbsp;Send&nbsp;
+                            </button>
+                            &nbsp;
+                        </span>
                         ) : null}
-                    <span className="label-box">&nbsp;From:</span> 
+                    <span className="label-box">From:</span> 
                     <span className="field-text">{isView ? email.sender : signedInEmail}</span>
                 </p>
             </div>
