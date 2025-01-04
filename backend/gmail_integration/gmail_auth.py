@@ -20,6 +20,6 @@ def get_gmail_creds(address):
             user.token = creds.to_json()
             user.save()
         return creds
-    except:
+    except Exception:
         # no credentials, user needs to authenticate
         return None

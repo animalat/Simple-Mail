@@ -2,15 +2,60 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from google_auth_oauthlib.flow import Flow
+from django.conf import settings
+from django.urls import reverse
+from django.shortcuts import redirect
 from .models import Group, Email
 from .serializers import GroupSerializer, EmailSerializer
-from gmail_integration.gmail_functions import send_email, remove_group_from_email
+from gmail_integration.gmail_functions import get_user_email_address, send_email, remove_group_from_email
 from gmail_integration.gmail_auth import get_gmail_creds
+
+SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
+CONFIG_PATH = "../gmail_integration/credentials.json"
 
 class GenerateAuthURL():
     def get(self, request):
-        return
+        try:
+            email_address = request.query_params.get('email_address', None)
+            creds = get_gmail_creds(email_address)
+            if creds:
+                return Response(
+                    {"message": "Already authenticated", "authenticated": True}
+                )
+            
+            flow = Flow.from_client_secrets_file(
+                CONFIG_PATH,
+                scopes=SCOPES,
+                redirect_uri=request.build_absolute_uri(reverse('oauth2callback'))
+            )
+            auth_url, _ = flow.authorization_url(prompt='consent')
 
+            return Response({"auth_url": auth_url, "authenticated": False})
+        except Exception as e:
+            return Response(
+                {"error": str(e), "authenticated": False}
+            )
+
+class OAuth2Callback():
+    def get(self, request):
+        try:
+            flow = Flow.from_client_secrets_file(
+                CONFIG_PATH,
+                scopes=SCOPES,
+                redirect_uri=request.build_absolute_uri(reverse('oauth2callback'))
+            )
+            flow.fetch_token(authorization_response=request.build_absolute_uri())
+
+            creds = flow.credentials
+            get_user_email_address(creds)           # also saves email address
+            return Response(
+                {"message": "Successfully authenticated", "authenticated": True}
+            )
+        except Exception as e:
+            return Response(
+                {"error": str(e), "authenticated": False}
+            )
+        
 class EmailListView(APIView):
     def get(self, request):
         email_address = request.query_params.get('email_address', None)

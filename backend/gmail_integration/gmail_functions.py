@@ -30,6 +30,8 @@ def get_user_email_address(creds):
         if created:
             print(f"Email address {email_address} saved to the database.")
         else:
+            email_address_instance.token = creds.to_json()
+            email_address_instance.save()
             print(f"Email address {email_address} already exists in the database.")
         
         return email_address_instance
