@@ -15,9 +15,11 @@ const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
     const [accounts, setAccounts] = useState(["example1@outlook.com", "example2@gmail.com", "long.email.example@outlook.com"]);
 
     const [folders, setFolders] = useState([]);
-    useEffect(() => {
-        getGroups(emailAddress).then((data) => setFolders(data));
-    }, [emailAddress]);
+    if (emailAddress !== "") {
+        useEffect(() => {
+            getGroups(emailAddress).then((data) => setFolders(data));
+        }, [emailAddress]);
+    }
 
     return (
         <SideNav 

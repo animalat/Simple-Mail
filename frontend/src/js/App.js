@@ -34,17 +34,22 @@ const App = () => {
                 groupId={selectedGroup}
                 onGroupClick={handleGroupClick}
             />
-            <EmailDisplay 
-                email={selectedEmail}
-                mode={emailDisplayState}
-                signedInEmail={emailAddress}
-                setViewMode={setViewMode}
-            />
-            <EmailList 
-                emailAddress={emailAddress}
-                groupId={selectedGroup}
-                onEmailClick={handleEmailClick} 
-            />
+            {emailAddress !== "" ? (
+                <div>
+                    <EmailDisplay 
+                        email={selectedEmail}
+                        mode={emailDisplayState}
+                        signedInEmail={emailAddress}
+                        setViewMode={setViewMode}
+                    />
+                    <EmailList 
+                        emailAddress={emailAddress}
+                        groupId={selectedGroup}
+                        onEmailClick={handleEmailClick} 
+                    />
+                </div>
+                ) : null
+            }
         </div>
     );
 };
