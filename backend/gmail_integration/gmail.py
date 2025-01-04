@@ -46,7 +46,7 @@ def main():
     with open(token_path, "w") as token:
       token.write(creds.to_json())
 
-  return creds
+  # return creds
 
   email_address_instance = get_user_email_address(creds)
   print(email_address_instance)

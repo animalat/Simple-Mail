@@ -4,6 +4,7 @@ from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 class EmailAddress(models.Model):
     address = models.EmailField(unique=True)
+    token = models.TextField()
 
     def __str__(self):
         return self.address

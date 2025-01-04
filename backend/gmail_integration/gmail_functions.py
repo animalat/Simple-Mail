@@ -21,7 +21,12 @@ def get_user_email_address(creds):
         profile = service.users().getProfile(userId="me").execute()
         email_address = profile.get("emailAddress")
 
-        email_address_instance, created = EmailAddress.objects.get_or_create(address=email_address)
+        email_address_instance, created = EmailAddress.objects.get_or_create(
+            address=email_address,
+            defaults={
+                "token": creds.to_json()
+            }
+        )
         if created:
             print(f"Email address {email_address} saved to the database.")
         else:

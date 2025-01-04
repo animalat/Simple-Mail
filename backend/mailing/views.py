@@ -1,10 +1,15 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from google_auth_oauthlib.flow import Flow
 from .models import Group, Email
 from .serializers import GroupSerializer, EmailSerializer
 from gmail_integration.gmail_functions import send_email, remove_group_from_email
-from gmail_integration.gmail import main
+from gmail_integration.gmail_auth import get_gmail_creds
+
+class GenerateAuthURL():
+    def get(self, request):
+        return
 
 class EmailListView(APIView):
     def get(self, request):
@@ -56,7 +61,7 @@ class SendEmailView(APIView):
             )
         
         try:
-            creds = main()
+            creds = get_gmail_creds(email_address)
 
             send_email(
                 creds=creds,
@@ -116,7 +121,7 @@ class RemoveGroupView(APIView):
         
         # try to call function
         try:
-            remove_group_from_email(creds=main(), email_address=email_address, group_id=group, email_id=email)
+            remove_group_from_email(creds=get_gmail_creds(email_address), email_address=email_address, group_id=group, email_id=email)
             return Response(
                 {"message": "Group removed successfully"}, 
                 status=status.HTTP_200_OK
