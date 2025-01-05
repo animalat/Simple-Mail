@@ -13,7 +13,7 @@ from gmail_integration.gmail_auth import get_gmail_creds
 SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
 CONFIG_PATH = "../gmail_integration/credentials.json"
 
-class GenerateAuthURL():
+class GenerateAuthURL(APIView):
     def get(self, request):
         try:
             email_address = request.query_params.get('email_address', None)
@@ -36,7 +36,7 @@ class GenerateAuthURL():
                 {"error": str(e), "authenticated": False}
             )
 
-class OAuth2Callback():
+class OAuth2Callback(APIView):
     def get(self, request):
         try:
             flow = Flow.from_client_secrets_file(

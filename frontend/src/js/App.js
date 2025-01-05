@@ -5,7 +5,7 @@ import EmailList from './components/email_list/EmailList';
 import EmailDisplay from './components/email_display/EmailDisplay';
 
 const App = () => {
-    const [emailDisplayState, setEmailDisplayState] = useState("draft");
+    const [emailDisplayState, setEmailDisplayState] = useState("view");
     const setViewMode = () => {
         setEmailDisplayState("view");
         setSelectedEmail({});
@@ -25,7 +25,7 @@ const App = () => {
         setSelectedGroup(group);
     };
 
-    const emailAddress = "";
+    const emailAddress = "nakshayanapps@gmail.com";
     
     return (
         <div>
