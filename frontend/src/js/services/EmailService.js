@@ -1,16 +1,20 @@
+import { authenticateUser } from "./Authenticate";
+
 export const getEmails = (emailAddress, groupId) => {
-  return fetch(`http://localhost:8000/mailing/emails/?email_address=${emailAddress}&group=${groupId}`)
+    authenticateUser(emailAddress);
+    return fetch(`http://localhost:8000/mailing/emails/?email_address=${emailAddress}&group=${groupId}`)
     .then((response) => response.json())
     .then((data) => {
-      return data;
+        return data;
     })
     .catch((error) => {
-      console.error("Error fetching emails:", error);
-      return [];
+        console.error("Error fetching emails:", error);
+        return [];
     });
 }
 
 export const sendEmail = (emailAddress, recipient, subject, body, attachment = null) => {
+    authenticateUser(emailAddress);
     const formData = new FormData();
     formData.append("email_address", emailAddress);
     formData.append("recipient", recipient);

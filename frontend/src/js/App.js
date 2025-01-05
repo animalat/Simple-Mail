@@ -25,7 +25,7 @@ const App = () => {
         setSelectedGroup(group);
     };
 
-    const emailAddress = "nakshayanapps@gmail.com";
+    const emailAddress = "";
     
     return (
         <div>

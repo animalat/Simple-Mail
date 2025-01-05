@@ -1,4 +1,7 @@
+import { authenticateUser } from "./Authenticate";
+
 export const getGroups = (emailAddress) => {
+    authenticateUser(emailAddress);
     return fetch(`http://localhost:8000/mailing/groups/?email_address=${emailAddress}`)
         .then((response) => response.json())
         .then((data) => {
@@ -11,6 +14,7 @@ export const getGroups = (emailAddress) => {
 };
 
 export const removeGroupFromEmail = (emailAddress, groupId, emailId) => {
+    authenticateUser(emailAddress);
     return fetch('http://localhost:8000/mailing/remove-group/', {
         method: 'POST',
         headers: {
