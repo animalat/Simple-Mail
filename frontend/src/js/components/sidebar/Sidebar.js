@@ -43,7 +43,7 @@ const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
                     onSelect={draftEmail}
                 >
                     <NavIcon>
-                        <i class="fa-solid fa-envelope" style={{ fontSize: '1.75em' }} />
+                        <i className="fa-solid fa-envelope" style={{ fontSize: '1.75em' }} />
                     </NavIcon>
                     <NavText style={{ fontSize: '1.4em' }}>
                         New Mail
@@ -73,7 +73,7 @@ const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
                     >
                         <NavIcon className="nav-icon-centered">
                             <i 
-                                class="fa-solid fa-plus" 
+                                className="fa-solid fa-plus" 
                                 style={{ 
                                     fontSize: '1.4em',
                                     display: 'flex',
