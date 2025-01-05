@@ -25,6 +25,10 @@ const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
         console.log("this is where a new email will be drafted.")
     };
 
+    const addEmail = () => {
+        console.log("this is where a new email will be added.")
+    };
+
     return (
         <SideNav 
             className="sidebar-custom"
@@ -62,6 +66,25 @@ const Sidebar = ({ emailAddress, groupId, onGroupClick }) => {
                             </NavText>
                         </NavItem>
                     ))}
+
+                    <NavItem 
+                        eventKey={'account/add'}
+                        onSelect={addEmail}
+                    >
+                        <NavIcon className="nav-icon-centered">
+                            <i 
+                                class="fa-solid fa-plus" 
+                                style={{ 
+                                    fontSize: '1.4em',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    textAlign: 'center',
+                                    height: '29px',
+                                    alignItems: 'center',
+                                }} 
+                            />
+                        </NavIcon>
+                    </NavItem>
                 </NavItem>
                 
                 {/* Folders */}
