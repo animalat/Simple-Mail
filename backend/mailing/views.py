@@ -7,11 +7,11 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from .models import Group, Email
 from .serializers import GroupSerializer, EmailSerializer
-from gmail_integration.gmail_functions import get_user_email_address, send_email, remove_group_from_email
+from gmail_integration.gmail_functions import get_user_email_address, read_labels, read_messages, send_email, remove_group_from_email
 from gmail_integration.gmail_auth import get_gmail_creds
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
-CONFIG_PATH = "../gmail_integration/credentials.json"
+CONFIG_PATH = "gmail_integration/credentials.json"
 
 class GenerateAuthURL(APIView):
     def get(self, request):
@@ -47,7 +47,10 @@ class OAuth2Callback(APIView):
             flow.fetch_token(authorization_response=request.build_absolute_uri())
 
             creds = flow.credentials
-            get_user_email_address(creds)           # also saves email address
+            address = (get_user_email_address(creds)).address  # also saves email address
+            read_labels(creds, address)
+            read_messages(creds, address)
+            
             return Response(
                 {"message": "Successfully authenticated", "authenticated": True}
             )

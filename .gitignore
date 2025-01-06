@@ -44,3 +44,4 @@ frontend/build/
 # Ignore Google API credentials and tokens
 credentials.json
 token.json
+backend/server.key

@@ -91,6 +91,18 @@ const EmailDisplay = ({ email, mode, signedInEmail, setViewMode }) => {
                     <span className="field-text">{isView ? email.sender : signedInEmail}</span>
                 </p>
             </div>
+            
+            <div className="email-date">
+                {isView ? (
+                    <p>
+                        <span className="label-box">Sent:</span> 
+                        <span className="field-text">
+                            {new Date(email.time_sent).toLocaleTimeString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric', year: 'numeric' })}
+                        </span>
+                    </p>
+                    ) : null
+                }
+            </div>
 
             <div className="email-to">
                 <p>
@@ -121,18 +133,6 @@ const EmailDisplay = ({ email, mode, signedInEmail, setViewMode }) => {
                                 onChange={(e) => setSendSubject(e.target.value)}
                             />
                     )
-                }
-            </div>
-            
-            <div className="email-date">
-                {isView ? (
-                    <p>
-                        <span className="label-box">Sent:</span> 
-                        <span className="field-text">
-                            {new Date(email.time_sent).toLocaleTimeString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric', year: 'numeric' })}
-                        </span>
-                    </p>
-                    ) : null
                 }
             </div>
 

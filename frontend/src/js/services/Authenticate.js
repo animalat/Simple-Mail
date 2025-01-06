@@ -17,7 +17,9 @@ const checkAuthAndGetAuthURL = (emailAddress) => {
 };
 
 export const authenticateUser = (emailAddress) => {
-    console.log("hello")
+    if (emailAddress === "") {
+        return;
+    }
     checkAuthAndGetAuthURL(emailAddress)
         .then((response) => {
             if (!response.authenticated) {
