@@ -1,14 +1,31 @@
-<h3 align="left">Simple Mail:</h3>
-<p align="left"><BR CLEAR=ALL />
-  <img src="https://drive.google.com/uc?export=view&id=1c9MX30oagAyv8UeIzS399lXHPnBlumT-" alt="Simple Mail Preview" width="762" height=auto border="10" /><BR CLEAR=ALL />
-A simplistic email application. <BR CLEAR=ALL /> <BR CLEAR=ALL />
-<h4 align="left">Frontend</h4>
-- React <BR CLEAR=ALL />
-- Node.js <BR CLEAR=ALL />
-- Electron <BR CLEAR=ALL />
-- Webpack <BR CLEAR=ALL />
-  
-<h4 align="left">Backend:</h4>
-- Django <BR CLEAR=ALL />
-- PostgreSQL (database) <BR CLEAR=ALL />
-- Gmail API <BR CLEAR=ALL />
+<h3 align="left">Simple Mail</h3>
+
+<p align="left">
+  <img src="https://drive.google.com/uc?export=view&id=1c9MX30oagAyv8UeIzS399lXHPnBlumT-" alt="Simple Mail Preview" width="762" style="border:10px solid #ddd;" />
+</p>
+
+---
+
+**Simple Mail** is a lightweight, cross-platform email client built with React, Electron, Django, and PostgreSQL. It connects to Gmail via the official Gmail API and OAuth2 to provide a fast, distraction-free alternative to traditional webmail interfaces.
+
+This project focuses on:
+- 📨 Simplified UI for reading, searching, and viewing Gmail messages
+- 🔒 Secure access via OAuth 2.0 (no scraping or credential storage)
+- 💽 Local database indexing for fast performance
+
+---
+
+### 🖥️ Frontend
+- React
+- Electron
+- Webpack
+- Node.js
+
+### 🛠️ Backend
+- Django
+- PostgreSQL
+- Gmail API (via OAuth2)
+
+---
+
+> ⚠️ **Disclaimer:** This project is for **personal and educational use only**. It uses the official Gmail API via OAuth and does not store user credentials. Simple Mail is **not affiliated with or endorsed by Google**.
