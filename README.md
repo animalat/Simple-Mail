@@ -11,7 +11,7 @@
 This project focuses on:
 - 📨 Simplified UI for reading, searching, and viewing Gmail messages
 - 🔒 Secure access via OAuth 2.0 (no scraping or credential storage)
-- 💽 Local database indexing for fast performance
+- 💽 Uses a local database for fast performance
 
 ---
 
