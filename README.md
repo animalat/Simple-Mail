@@ -15,13 +15,12 @@ This project focuses on:
 ---
 
 ### Frontend
-- React
+- React (Javascript)
 - Electron
-- Webpack
 - Node.js
 
 ### Backend
-- Django
+- Django (Python)
 - PostgreSQL
 - Gmail API (via OAuth2)
 
