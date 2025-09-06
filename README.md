@@ -6,26 +6,25 @@
 
 ---
 
-**Simple Mail** is a lightweight, cross-platform email client built with React, Electron, Django, and PostgreSQL. It connects to Gmail via the official Gmail API and OAuth2 to provide a fast, distraction-free alternative to traditional webmail interfaces.
+Simple Mail is a lightweight cross-platform email client built with React, Electron, Django, and PostgreSQL. It connects to Gmail through the official Gmail API and OAuth2 to provide a fast, distraction-free alternative to traditional webmail interfaces.
 
 This project focuses on:
-- 📨 Simplified UI for reading, searching, and viewing Gmail messages
-- 🔒 Secure access via OAuth 2.0 (no scraping or credential storage)
-- 💽 Uses a local database for fast performance
+- Simplified UI for reading, searching, and viewing Gmail messages
+- Secure access via OAuth 2.0 (no scraping or credential storage)
 
 ---
 
-### 🖥️ Frontend
+### Frontend
 - React
 - Electron
 - Webpack
 - Node.js
 
-### 🛠️ Backend
+### Backend
 - Django
 - PostgreSQL
 - Gmail API (via OAuth2)
 
 ---
 
-> ⚠️ **Disclaimer:** This project is for **personal and educational use only**. It uses the official Gmail API via OAuth and does not store user credentials. Simple Mail is **not affiliated with or endorsed by Google**.
+> Disclaimer: This project is for personal and educational use only. It uses the official Gmail API via OAuth and does not store user credentials. Simple Mail is not affiliated with or endorsed by Google.
