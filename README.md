@@ -22,7 +22,7 @@ This project focuses on:
 ### Backend
 - Django (Python)
 - PostgreSQL
-- Gmail API (via OAuth2)
+- Gmail API (via OAuth 2.0)
 
 ---
 
