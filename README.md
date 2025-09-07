@@ -11,6 +11,7 @@ Simple Mail is a lightweight cross-platform email client built with React, Elect
 This project focuses on:
 - Simplified UI for reading, searching, and viewing Gmail messages
 - Secure access via OAuth 2.0 (no scraping or credential storage)
+- Safely storing emails with PostgreSQL
 
 ---
 
