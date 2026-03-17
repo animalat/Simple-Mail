@@ -26,5 +26,3 @@ This project focuses on:
 - Gmail API (via OAuth 2.0)
 
 ---
-
-> Disclaimer: This project is for personal and educational use only. It uses the official Gmail API via OAuth and does not store user credentials. Simple Mail is not affiliated with or endorsed by Google.
